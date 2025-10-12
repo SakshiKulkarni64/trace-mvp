@@ -1,0 +1,7 @@
+streamlit
+sqlalchemy
+pydantic
+spacy
+transformers
+torch
+python-multipart

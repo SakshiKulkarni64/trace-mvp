@@ -1,0 +1,146 @@
+https://wormhole.app/ROqEk6?error=gone#ZN1nXxRDhpeZBuwVXkhgbQ (devops)
+
+
+
+import java.util.Scanner;
+
+class AreaOfSquare {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter side of square: ");
+        int side = sc.nextInt();
+
+        int area = side * side;
+        System.out.println("Area of square = " + area);
+    }
+}
+
+
+
+
+import java.util.Scanner;
+
+class SimpleInterest {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter principal: ");
+        int p = sc.nextInt();
+
+        System.out.print("Enter rate: ");
+        int r = sc.nextInt();
+
+        System.out.print("Enter time: ");
+        int t = sc.nextInt();
+
+        int si = (p * r * t) / 100;
+        System.out.println("Simple Interest = " + si);
+    }
+}
+
+
+
+
+import java.util.Scanner;
+
+class PrimeCheck {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+        int n = sc.nextInt();
+        int count = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                count++;
+            }
+        }
+
+        if (count == 2) {
+            System.out.println("Prime number");
+        } else {
+            System.out.println("Not a prime number");
+        }
+    }
+}
+
+
+
+class AlternatePrimes {
+    public static void main(String args[]) {
+
+        boolean print = true;
+
+        for (int n = 2; n <= 50; n++) {
+            int count = 0;
+
+            for (int i = 1; i <= n; i++) {
+                if (n % i == 0)
+                    count++;
+            }
+
+            if (count == 2) {
+                if (print)
+                    System.out.print(n + " ");
+                print = !print;
+            }
+        }
+    }
+}
+
+
+
+
+import java.util.Scanner;
+
+class StringLength {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String str = sc.nextLine();
+
+        int length = str.length();
+        System.out.println("Length of string = " + length);
+    }
+}
+
+
+import java.util.Scanner;
+
+class Bank {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        int balance = 0;
+        int choice;
+
+        System.out.println("1. Deposit");
+        System.out.println("2. Withdraw");
+        System.out.println("3. Check Balance");
+
+        System.out.print("Enter your choice: ");
+        choice = sc.nextInt();
+
+        if (choice == 1) {
+            System.out.print("Enter deposit amount: ");
+            int amount = sc.nextInt();
+            balance = balance + amount;
+            System.out.println("Balance = " + balance);
+        }
+        else if (choice == 2) {
+            System.out.print("Enter withdraw amount: ");
+            int amount = sc.nextInt();
+            balance = balance - amount;
+            System.out.println("Balance = " + balance);
+        }
+        else if (choice == 3) {
+            System.out.println("Balance = " + balance);
+        }
+        else {
+            System.out.println("Invalid choice");
+        }
+    }
+}

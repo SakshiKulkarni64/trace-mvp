@@ -1,146 +1,246 @@
-https://wormhole.app/ROqEk6?error=gone#ZN1nXxRDhpeZBuwVXkhgbQ (devops)
+1. Basic Calculator
+🔹 Java Code
+package com.example;
 
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+🔹 JUnit Test
+package com.example;
 
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
-import java.util.Scanner;
+public class CalculatorTest {
+    @Test
+    public void testAdd() {
+        Calculator c = new Calculator();
+        assertEquals(5, c.add(2, 3));
+    }
+}
+✅ 2. Simple Greeting Message (API-like)
+🔹 Java Code
+package com.example;
 
-class AreaOfSquare {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
+public class Greeting {
+    public String greet(String name) {
+        return "Hello " + name;
+    }
+}
+🔹 JUnit Test
+package com.example;
 
-        System.out.print("Enter side of square: ");
-        int side = sc.nextInt();
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
-        int area = side * side;
-        System.out.println("Area of square = " + area);
+public class GreetingTest {
+    @Test
+    public void testGreet() {
+        Greeting g = new Greeting();
+        assertEquals("Hello John", g.greet("John"));
+    }
+}
+✅ 3. Linear Search
+🔹 Java Code
+package com.example;
+
+public class LinearSearch {
+    public int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key)
+                return i;
+        }
+        return -1;
+    }
+}
+🔹 JUnit Test
+package com.example;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class LinearSearchTest {
+    @Test
+    public void testSearch() {
+        LinearSearch ls = new LinearSearch();
+        int[] arr = {1, 2, 3, 4};
+        assertEquals(2, ls.search(arr, 3));
+    }
+}
+✅ 4. Greatest of 3 Numbers
+🔹 Java Code
+package com.example;
+
+public class GreatestThree {
+    public int findGreatest(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
+}
+🔹 JUnit Test
+package com.example;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class GreatestThreeTest {
+    @Test
+    public void testGreatest() {
+        GreatestThree g = new GreatestThree();
+        assertEquals(10, g.findGreatest(10, 5, 3));
+    }
+}
+✅ 5. Bank Account
+🔹 Java Code
+package com.example;
+
+public class BankAccount {
+    private double balance = 0;
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+🔹 JUnit Test
+package com.example;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class BankAccountTest {
+    @Test
+    public void testBank() {
+        BankAccount acc = new BankAccount();
+        acc.deposit(100);
+        acc.withdraw(40);
+        assertEquals(60, acc.getBalance(), 0.01);
+    }
+}
+✅ 6. Greatest of 2 Numbers
+🔹 Java Code
+package com.example;
+
+public class GreatestTwo {
+    public int max(int a, int b) {
+        return (a > b) ? a : b;
+    }
+}
+🔹 JUnit Test
+package com.example;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class GreatestTwoTest {
+    @Test
+    public void testMax() {
+        GreatestTwo g = new GreatestTwo();
+        assertEquals(8, g.max(8, 3));
     }
 }
 
 
 
 
-import java.util.Scanner;
+1. BASIC CALCULATOR – pom.xml
+🔹 Normal pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
 
-class SimpleInterest {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
+  <groupId>com.example</groupId>
+  <artifactId>calculator</artifactId>
+  <version>1.0-SNAPSHOT</version>
 
-        System.out.print("Enter principal: ");
-        int p = sc.nextInt();
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
 
-        System.out.print("Enter rate: ");
-        int r = sc.nextInt();
+Jenkins-ready pom.xml
 
-        System.out.print("Enter time: ");
-        int t = sc.nextInt();
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
 
-        int si = (p * r * t) / 100;
-        System.out.println("Simple Interest = " + si);
-    }
-}
+  <groupId>com.example</groupId>
+  <artifactId>calculator</artifactId>
+  <version>1.0-SNAPSHOT</version>
 
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
+  <build>
+    <plugins>
 
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
 
-import java.util.Scanner;
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+      </plugin>
 
-class PrimeCheck {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.8</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-        System.out.print("Enter a number: ");
-        int n = sc.nextInt();
-        int count = 0;
-
-        for (int i = 1; i <= n; i++) {
-            if (n % i == 0) {
-                count++;
-            }
-        }
-
-        if (count == 2) {
-            System.out.println("Prime number");
-        } else {
-            System.out.println("Not a prime number");
-        }
-    }
-}
-
-
-
-class AlternatePrimes {
-    public static void main(String args[]) {
-
-        boolean print = true;
-
-        for (int n = 2; n <= 50; n++) {
-            int count = 0;
-
-            for (int i = 1; i <= n; i++) {
-                if (n % i == 0)
-                    count++;
-            }
-
-            if (count == 2) {
-                if (print)
-                    System.out.print(n + " ");
-                print = !print;
-            }
-        }
-    }
-}
-
-
-
-
-import java.util.Scanner;
-
-class StringLength {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter a string: ");
-        String str = sc.nextLine();
-
-        int length = str.length();
-        System.out.println("Length of string = " + length);
-    }
-}
+    </plugins>
+  </build>
+</project>
 
 
-import java.util.Scanner;
+2. GREETING APP – pom.xml
 
-class Bank {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
+👉 Only change artifactId
 
-        int balance = 0;
-        int choice;
+<artifactId>greeting-app</artifactId>
 
-        System.out.println("1. Deposit");
-        System.out.println("2. Withdraw");
-        System.out.println("3. Check Balance");
+👉 Rest SAME as above Jenkins-ready file
 
-        System.out.print("Enter your choice: ");
-        choice = sc.nextInt();
 
-        if (choice == 1) {
-            System.out.print("Enter deposit amount: ");
-            int amount = sc.nextInt();
-            balance = balance + amount;
-            System.out.println("Balance = " + balance);
-        }
-        else if (choice == 2) {
-            System.out.print("Enter withdraw amount: ");
-            int amount = sc.nextInt();
-            balance = balance - amount;
-            System.out.println("Balance = " + balance);
-        }
-        else if (choice == 3) {
-            System.out.println("Balance = " + balance);
-        }
-        else {
-            System.out.println("Invalid choice");
-        }
-    }
-}
+
+
+
+
+commands for docker exp:
+

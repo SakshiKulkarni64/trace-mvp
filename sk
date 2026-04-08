@@ -244,3 +244,94 @@ Jenkins-ready pom.xml
 
 commands for docker exp:
 
+15:
+
+docker ps
+pocker ps -a
+docker images
+docker run hello-world
+docker pull nginx
+docker run -d -p 8080:80 nginx
+docker stop <cont.id>
+docker rm <cont.id>
+docker images 
+
+
+16. 
+
+folder :docker app 
+3 files 
+sample.py :
+
+print("hello")
+
+dockerfile :
+FROM python:3.9-slim
+WORKDIR /app
+COPY app.py
+RUN pip install flask
+EXPOSE 5020
+CMD ["python","app.py"]
+
+app.py:
+
+from flask import Flask
+app= Flask(__name__)
+@app.route("/")
+def home():
+    return "hello"
+if __name__=="__main__":
+    app.run(host="0.0.0.0",port=5000)
+
+
+docker build -t my-python-app
+docker images
+docker tun my-python-app
+docker run -p 5000:5000 my-python-app
+
+
+17
+
+docker run -d nginx
+docker run -d -p 8080:80 nginx
+
+docker volume create myvolume
+docker volume ls
+docker run -it -v myvolume:/data ubuntu bash
+cd /data
+echo "hello">Test.txt
+exit
+docker run -it -v myvolume:/data ubuntu bash
+cat /data/Test.txt
+
+docker run -d -p 8080:80 -v myvolume:/usr/share/nginx/html nginx
+docker run -it -v myvolume:/data ubuntu bash
+echo "<h1>hii</h1>" /data/index.html
+exit
+
+docker volume ls
+docker volume inspect myvolume
+
+
+
+18:
+docker pull nginx
+docker images
+docker login
+docker tag nginx <username>/skdocker:latest
+docker push <username>/skdocker:latest
+
+
+
+19
+
+folder -> App.java->
+cmd:  javac App.java
+        jar cfe app.jar App App.class
+
+docker build -t mudocimage .
+
+docker build -t java-app .
+docker run -d -t java-app
+
+

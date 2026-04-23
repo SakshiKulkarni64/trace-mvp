@@ -1,0 +1,854 @@
+IA1
+
+(1) Introduction to Git and Local Repository Management
+
+mkdir Git_Lab_Experiment1
+cd Git_Lab_Experiment1
+git init
+git config --global user.name "ABC"
+git config --global user.email your_email@example.com
+echo "This is my first Git experiment" > README.txt
+git status
+git add README.txt
+git commit -m "Initial commit"
+echo "Git tracks file changes" >> README.txt
+git status
+git add README.txt
+git commit -m "Updated README file"
+git log
+history -a
+
+(2)Working with Git Branches
+
+mkdir Git_Exp2
+cd Git_Exp2
+git init
+echo "this is initial content" > file1.txt
+git add file1.txt
+git commit -m "Initial commit"
+git branch feature-branch
+git checkout feature-branch
+echo "this is feature branch modification" > file1.txt
+git add file1.txt
+git commit -m "Added new feature in feature branch"
+git checkout master
+# Modify same file (to force conflict)
+echo "this is main branch modification" > file1.txt
+git add file1.txt
+git commit -m "Updated file in master branch"
+# Merge feature branch (conflict will happen)
+git merge feature-branch
+
+# -------- CONFLICT RESOLUTION --------
+# Open file and fix manually
+notepad file1.txt
+Inside file, you will see:
+<<<<<<< HEAD
+this is main branch modification
+=======
+this is feature branch modification
+>>>>>>> feature-branch
+Replace with (final resolved content):
+this is main branch modification
+this is feature branch modification
+# Save file, then continue
+git add file1.txt
+git commit -m "Resolved merge conflict"
+git log --oneline
+git branch -d feature-branch
+
+(3)GitHub Repository Creation and Push
+
+# One-time config (skip if already done)
+git config --global user.name "Your Name"
+git config --global user.email "your_email@example.com"
+#create repo in github
+cd Desktop
+git clone https://github.com/YourUsername/git-lab-demo.git
+cd git-lab-demo
+echo 'print("This file is from local machine")' > main.py
+git add main.py
+git commit -m "Add main.py file"
+git push -u origin main
+# (manually edit README.md on GitHub website)
+git pull origin main
+git status
+git log --oneline
+
+(4)GitHub Collaboration Using Pull Requests
+
+# Clone your repository (after creating it on GitHub with README)
+cd Desktop
+git clone https://github.com/YOUR_USERNAME/Git_PullRequests.git
+cd Git_PullRequests
+echo "This file is created in main branch" > file1.txt
+git add file1.txt
+git commit -m "Initial commit in main"
+git push origin main
+git checkout -b feature-1
+echo "This change is from feature-1 branch" >> file1.txt
+echo "Feature branch file" > feature.txt
+git add .
+git commit -m "Changes done in feature-1"
+git push origin feature-1
+
+# -------- NOW GO TO GITHUB --------
+# Open your repo → Click "Compare & Pull Request"
+# Base: main
+# Compare: feature-1
+# Click "Create Pull Request"
+# Click "Merge Pull Request" → Confirm
+
+git checkout main
+git pull origin main
+
+(5) Git Tagging and Release Creation
+
+mkdir Exp5
+cd Exp5
+git init
+echo "Git Tagging" > file1.txt
+git add file1.txt
+git commit -m "Initial commit"
+git tag -a v1.0 -m "Version 1.0"
+git tag
+# Add remote (GitHub repo must be created already)
+git remote add origin https://github.com/YOUR_USERNAME/Exp5.git
+git push -u origin main
+git push origin v1.0
+
+(6)Creation and Build of a Java Project Using Apache Maven
+
+mvn --version
+java --version
+cd Desktop
+mkdir maven-demo
+cd maven-demo
+mvn archetype:generate
+
+groupId: com.demo
+artifactId: demo
+version: 1.0-SNAPSHOT
+package: com.demo
+Y
+
+go to App.java replace with the following codes 
+-----Hello World-------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+--------Area of Square------------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        int side = 5;
+        System.out.println(side * side);
+    }
+}
+----------Simple Interest----------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        int p = 1000, t = 2, r = 5;
+        System.out.println((p * t * r) / 100);
+    }
+}
+----------Even or Odd--------------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        int n = 10;
+        if(n % 2 == 0)
+            System.out.println("Even");
+        else
+            System.out.println("Odd");
+    }
+}
+-----------String Length------------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        System.out.println("DevOps".length());
+    }
+}
+----------Prime or not------------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        int n = 7;
+        int count = 0;
+        for(int i = 1; i <= n; i++) {
+            if(n % i == 0)
+                count++;
+        }
+        if(count == 2)
+            System.out.println("Prime");
+        else
+            System.out.println("Not Prime");
+    }
+}
+------------------Alternate Prime Numbers (1 to 20)------------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        int count = 0;
+        for(int n = 2; n <= 20; n++) {
+            int c = 0;
+            for(int i = 1; i <= n; i++) {
+                if(n % i == 0)
+                    c++;
+            }
+            if(c == 2) {
+                count++;
+                if(count % 2 == 1)
+                    System.out.println(n);
+            }
+        }
+    }
+}
+---------------Bank Service Program-----------------------
+package com.demo;
+public class App {
+    public static void main(String[] args) {
+        int balance = 1000;
+        balance = balance + 500;
+        System.out.println("After deposit: " + balance);
+        balance = balance - 300;
+        System.out.println("After withdrawal: " + balance);
+        System.out.println("Final balance: " + balance);
+    }
+}
+----------------------------------------------------------
+cd demo
+mvn clean package
+cd target
+java -cp demo-1.0-SNAPSHOT.jar com.demo.App
+
+(7)Jenkins Freestyle Job
+
+new item
+freestyle project 
+In Source Code Management:
+Select Git
+Paste your repo URL:
+https://github.com/YOUR_USERNAME/YOUR_REPO.git
+Scroll → Build → Add build step
+Choose:
+👉 Execute Windows batch command
+echo Building project...
+Scroll → Post-build Actions
+Click → Add post-build action
+Select:
+Archive the artifacts
+In Files to archive:
+*.txt
+apply->save
+build Now
+
+(8)Jenkins Build Triggers
+
+Create a GitHub repository named Github_Bankservice
+Add a file named BankService.java with the following code:
+public class BankService {
+    public static void main(String[] args) {
+        int balance = 5000;
+        balance = balance + 500;
+        System.out.println("After deposit: " + balance);
+        balance = balance - 300;
+        System.out.println("After withdraw: " + balance);
+    }
+}
+
+Open Jenkins (http://localhost:8080) and login
+Create new item
+Name: GitHub_BankApplication
+Select: Freestyle Project → OK
+In Source Code Management:
+Select Git
+Repository URL:
+https://github.com/YOUR_USERNAME/Github_Bankservice.git
+Branch:  */main
+In Build Triggers:
+Tick "Poll SCM"
+* * * * *
+Tick "GitHub hook trigger for GITScm polling"
+In Build:
+Add build step → Execute Windows batch command
+
+javac BankService.java
+java BankService
+
+Save the job
+Click "Build Now" once and check console output
+
+Now go to GitHub
+Edit BankService.java (change any value, e.g., 500 → 700)
+Commit changes
+Wait 1 minute
+Jenkins will automatically trigger build
+
+(9)Jenkins Declarative Pipeline,(10)Jenkins Pipeline Visualization and Logs
+
+Create a new GitHub repository named Jenkins_Pipeline
+Add a file named Jenkinsfile with the following code:
+pipeline {
+    agent any
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World from SCM!'
+                script {
+                    def sum = 15 + 27
+                    echo "15 + 27 = ${sum}"
+                }
+            }
+        }
+    }
+}
+
+Open Jenkins → http://localhost:8080
+Click New Item
+Enter name: pipeline_job
+Select Pipeline → OK
+In Pipeline section:
+Definition → Pipeline script from SCM
+SCM → Git
+Repository URL:
+https://github.com/YOUR_USERNAME/Jenkins_Pipeline.git
+Branch: */main
+Script Path:
+Jenkinsfile
+Click Save
+Click Build Now
+Click Console Output to view result
+
+for 10th do samething show the stages logs graphs etc
+
+(11) Writing Unit Tests using JUnit
+
+Open Eclipse
+File → New → Java Project
+Project Name: JUnitDemo → Finish
+Right click project → New → Package
+Name: lab
+Right click package → New → Class
+Create class (example: Calculator)
+Write program code
+Right click package → New → JUnit Test Case
+Select JUnit 4
+Name: CalculatorTest → Finish
+Write test code
+Right click test file → Run As → JUnit Test
+Check result:
+Green bar → Passed
+Red bar → Failed
+
+✅ 1. Calculator
+package lab;
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+}
+package lab;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+public class CalculatorTest {
+    Calculator c = new Calculator();
+    @Test
+    void testAdd() {
+        assertEquals(5, c.add(2, 3));
+    }
+    @Test
+    void testSubtract() {
+        assertEquals(1, c.subtract(3, 2));
+    }
+}
+✅ 2. Greeting
+package lab;
+public class Greeting {
+    public String getMessage(String name) {
+        return "Hello " + name;
+    }
+}
+package lab;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+public class GreetingTest {
+    Greeting g = new Greeting();
+    @Test
+    void testMessage() {
+        assertEquals("Hello ABC", g.getMessage("ABC"));
+    }
+}
+✅ 3. Linear Search
+package lab;
+public class LinearSearch {
+    public int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key)
+                return i;
+        }
+        return -1;
+    }
+}
+package lab;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+public class LinearSearchTest {
+    LinearSearch ls = new LinearSearch();
+    @Test
+    void testSearch() {
+        int[] arr = {1, 2, 3, 4};
+        assertEquals(2, ls.search(arr, 3));
+    }
+}
+✅ 4. Max Finder
+package lab;
+public class MaxFinder {
+    public int findMax(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
+}
+package lab;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+public class MaxFinderTest {
+    MaxFinder mf = new MaxFinder();
+    @Test
+    void testMax() {
+        assertEquals(9, mf.findMax(3, 9, 5));
+    }
+}
+✅ 5. Bank Account
+package lab;
+public class BankAccount {
+    double balance = 0;
+    public void deposit(double amount) {
+        balance += amount;
+    }
+    public void withdraw(double amount) {
+        balance -= amount;
+    }
+    public double getBalance() {
+        return balance;
+    }
+}
+package lab;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+public class BankAccountTest {
+    @Test
+    void testDeposit() {
+        BankAccount acc = new BankAccount();
+        acc.deposit(100);
+        assertEquals(100, acc.getBalance());
+    }
+    @Test
+    void testWithdraw() {
+        BankAccount acc = new BankAccount();
+        acc.deposit(100);
+        acc.withdraw(40);
+        assertEquals(60, acc.getBalance());
+    }
+}
+
+(12)Running JUnit Tests with Maven/Gradle
+
+java --version
+mvn --version
+cd Desktop
+mkdir exp12
+cd exp12
+mvn archetype:generate
+# Give inputs:
+# groupId: com.demo
+# artifactId: demo
+# version: 1.0-SNAPSHOT
+# package: com.demo
+# Y
+cd demo
+mvn clean compile
+mvn test
+mvn package
+
+(13)Integrating JUnit with Jenkins
+
+Create Maven project (already done in Exp 12)
+Make sure project contains:
+- src/main/java → your Java code
+- src/test/java → JUnit test cases
+- pom.xml (with JUnit dependency)
+Push project to GitHub
+Open Jenkins → http://localhost:8080
+Click New Item
+Enter name: junit-maven-job
+Select: Maven Project → Click OK
+Source Code Management:
+Select Git
+Repository URL:
+https://github.com/YOUR_USERNAME/YOUR_REPO.git
+Branch:
+*/main
+Build Triggers:
+Select:
+Poll SCM
+Schedule:
+* * * * *
+Build:
+Root POM:
+pom.xml
+Goals and options:
+clean test
+Post-Build Actions:
+Archive the artifacts
+target/*.jar
+Click Apply → Save
+Click Build Now
+Click Console Output
+
+(14)Test Coverage using JaCoCo
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.10</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+
+After execution, JaCoCo generates the report at:
+target/site/jacoco/index.html
+Open index.html in a browser to see:
+•	Instruction coverage
+•	Line coverage
+•	Branch coverage
+•	Method coverage
+•	Class coverage
+
+(15)Introduction to Docker and Basic Commands
+
+docker --version
+docker ps
+docker ps -a
+docker images
+docker run hello-world
+docker pull nginx
+docker run -d -p 8080:80 nginx
+docker ps
+docker stop <container_id>
+docker rm <container_id>
+docker rmi nginx
+
+(16)Creating Docker Images using Dockerfile
+
+app.py
+
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+PORT = 5000
+class Handler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Hello from Docker")
+HTTPServer(("", PORT), Handler).serve_forever()
+
+Dockerfile
+
+FROM python:3.9-slim
+WORKDIR /app
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "app.py"]
+
+Run:
+docker build -t myapp .
+docker run -p 5000:5000 myapp
+👉 Open: http://localhost:5000
+
+(17)Docker Volumes and Port Mapping
+
+docker --version
+docker ps
+docker run -d -p 8082:80 nginx
+docker ps
+docker volume create myvolume
+docker volume ls
+docker run -d -p 8083:80 -v myvolume:/usr/share/nginx/html nginx
+docker ps
+docker stop <container_id>
+docker rm <container_id>
+docker run -d -p 8083:80 -v myvolume:/usr/share/nginx/html nginx
+docker ps
+
+(18)Docker Image Push to Docker Hub
+
+Create a folder (example: Docker-Java)
+Create file: Grade.java
+
+public class Grade {
+    static char gradeFunction(double avg) {
+        if (avg >= 90) return 'A';
+        else if (avg >= 80) return 'B';
+        else if (avg >= 70) return 'C';
+        else if (avg >= 60) return 'D';
+        else return 'F';
+    }
+    public static void main(String[] args) {
+        double avg = 85;
+        System.out.println("Average: " + avg);
+        System.out.println("Grade: " + gradeFunction(avg));
+    }
+}
+
+Create file: Dockerfile
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . .
+RUN javac Grade.java
+CMD ["java", "Grade"]
+
+Open Command Prompt
+
+cd Desktop
+cd Docker-Java
+docker build -t java-app .
+docker run java-app
+docker login
+docker tag java-app yourusername/java-app:v1
+docker push yourusername/java-app:v1
+
+(19)Jenkins and Docker Integration
+
+Open Jenkins → http://localhost:8080
+Login
+Click New Item
+Enter name: docker-job
+Select Freestyle Project → OK
+Scroll to General
+(Optional) Add description
+Scroll to Source Code Management
+Select Git
+Paste your repo URL (repo must contain Dockerfile + Java file)
+Branch:
+*/main
+Scroll to Build Triggers
+Select Poll SCM
+Schedule:
+* * * * *
+Scroll to Build → Add Build Step → Execute Windows batch command
+Write:
+docker build -t java-app .
+docker run -d -p 5001:5000 java-app
+Click Save
+Click Build Now
+Click Console Output to verify
+Open Docker Desktop → check image created
+Open browser:
+http://localhost:5001
+📁 Required files in GitHub repo
+
+Dockerfile
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . .
+RUN javac Grade.java
+CMD ["java", "Grade"]
+
+Grade.java
+
+public class Grade {
+    static char gradeFunction(double avg) {
+        if (avg >= 90) return 'A';
+        else if (avg >= 80) return 'B';
+        else if (avg >= 70) return 'C';
+        else if (avg >= 60) return 'D';
+        else return 'F';
+    }
+    public static void main(String[] args) {
+        double avg = 85;
+        System.out.println("Average: " + avg);
+        System.out.println("Grade: " + gradeFunction(avg));
+    }
+}
+
+(20)Simple End-to-End CI/CD Pipeline
+
+🔹 Step 1: Create Maven Web Project
+Open Command Prompt
+Run:
+mvn archetype:generate
+Choose:
+3 → org.apache.maven.archetypes:maven-archetype-webapp
+Enter:
+GroupId: com.demo
+ArtifactId: webapp
+Version: 1.0-SNAPSHOT
+Package: com.demo
+🔹 Step 2: Add Java Folder (IMPORTANT)
+
+By default Maven webapp does NOT create java folder
+
+So create manually:
+
+webapp/src/main/java/com/demo/
+🔹 Step 3: Add Servlet Code
+
+Create file:
+
+HelloServlet.java
+
+Paste:
+
+package com.demo;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class HelloServlet extends HttpServlet {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        res.getWriter().println("CI/CD OK");
+    }
+}
+🔹 Step 4: Update index.jsp
+
+Path:
+
+src/main/webapp/index.jsp
+
+Code:
+
+<h1>CI/CD Demo</h1>
+<a href="hello">Run</a>
+🔹 Step 5: Update web.xml
+
+Path:
+
+src/main/webapp/WEB-INF/web.xml
+
+Add:
+
+<servlet>
+<servlet-name>hello</servlet-name>
+<servlet-class>com.demo.HelloServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>hello</servlet-name>
+<url-pattern>/hello</url-pattern>
+</servlet-mapping>
+🔹 Step 6: Update pom.xml
+
+Add dependency:
+
+<dependency>
+<groupId>javax.servlet</groupId>
+<artifactId>javax.servlet-api</artifactId>
+<version>4.0.1</version>
+<scope>provided</scope>
+</dependency>
+
+Also ensure:
+
+<packaging>war</packaging>
+🔹 Step 7: Build Project
+mvn clean package
+
+✔ WAR file will be created inside:
+
+target/webapp.war
+🔹 Step 8: Create Dockerfile
+
+In root folder:
+
+Dockerfile
+FROM tomcat:9
+COPY target/webapp.war /usr/local/tomcat/webapps/
+🔹 Step 9: Upload to GitHub (DRAG & DROP)
+
+Upload these files:
+
+pom.xml
+Dockerfile
+Jenkinsfile
+src/
+
+👉 That’s it (no commands needed)
+
+🔹 Step 10: Jenkins Setup
+Open:
+http://localhost:8080
+Click New Item
+Name:
+exp20
+Select:
+Pipeline
+Choose:
+Pipeline script from SCM
+Select Git
+Paste repo link
+Branch: main
+Script path:
+Jenkinsfile
+Save
+🔹 Step 11: Jenkinsfile (YOUR WORKING CODE)
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+
+        stage('Docker') {
+            steps {
+                bat 'docker build -t webapp .'
+                bat 'docker run -d -p 8087:8080 webapp'
+            }
+        }
+    }
+}
+🔹 Step 12: Run Pipeline
+
+Click:
+
+Build Now
+🔹 Step 13: Output
+
+Open browser:
+
+http://localhost:8087/webapp
+
+Click:
+
+Run
+
+✔ Output:
+
+CI/CD OK

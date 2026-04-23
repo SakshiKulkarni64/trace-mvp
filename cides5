@@ -1,0 +1,225 @@
+#1calculator.java
+
+public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public int divide(int a, int b) {
+        if (b == 0) throw new IllegalArgumentException("Divide by zero");
+        return a / b;
+    }
+}
+  calculatortest.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorTest {
+
+    Calculator c = new Calculator();
+
+    @Test // ✅ PASS
+    void testAdd() {
+        assertEquals(10, c.add(5, 5));
+    }
+
+    @Test // ✅ PASS
+    void testSubtract() {
+        assertEquals(2, c.subtract(5, 3));
+    }
+
+    @Test // ❌ FAIL
+    void testMultiply() {
+        assertEquals(20, c.multiply(3, 5)); // wrong
+    }
+
+    @Test // ❌ FAIL
+    void testDivide() {
+        assertEquals(3, c.divide(10, 2)); // wrong
+    }
+}
+
+#greet.java
+public class GreetingService {
+
+    public String greet(String name) {
+        if (name == null || name.isEmpty()) {
+            return "Hello Guest";
+        }
+        return "Hello " + name;
+    }
+}
+#greettest
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class GreetingServiceTest {
+
+    GreetingService g = new GreetingService();
+
+    @Test // ✅ PASS
+    void testValidName() {
+        assertEquals("Hello John", g.greet("John"));
+    }
+
+    @Test // ✅ PASS
+    void testEmptyName() {
+        assertEquals("Hello Guest", g.greet(""));
+    }
+
+    @Test // ❌ FAIL
+    void testWrongOutput() {
+        assertEquals("Hi John", g.greet("John")); // wrong
+    }
+
+    @Test // ❌ FAIL
+    void testNullName() {
+        assertEquals("Hello Null", g.greet(null)); // wrong
+    }
+}
+
+#linear
+public class LinearSearch {
+
+    public int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) return i;
+        }
+        return -1;
+    }
+}
+
+#lintest
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class LinearSearchTest {
+
+    LinearSearch ls = new LinearSearch();
+    int[] arr = {2, 4, 6, 8};
+
+    @Test // ✅ PASS
+    void testFound() {
+        assertEquals(2, ls.search(arr, 6));
+    }
+
+    @Test // ✅ PASS
+    void testNotFound() {
+        assertEquals(-1, ls.search(arr, 10));
+    }
+
+    @Test // ❌ FAIL
+    void testWrongIndex() {
+        assertEquals(3, ls.search(arr, 6)); // wrong
+    }
+
+    @Test // ❌ FAIL
+    void testAnotherFail() {
+        assertEquals(0, ls.search(arr, 8)); // wrong
+    }
+}
+
+#maxnum
+public class MaxNumber {
+
+    public int findMax(int a, int b, int c) {
+        if (a >= b && a >= c) return a;
+        else if (b >= a && b >= c) return b;
+        else return c;
+    }
+}
+#test
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MaxNumberTest {
+
+    MaxNumber m = new MaxNumber();
+
+    @Test // ✅ PASS
+    void testMax1() {
+        assertEquals(10, m.findMax(10, 5, 3));
+    }
+
+    @Test // ✅ PASS
+    void testMax2() {
+        assertEquals(8, m.findMax(2, 8, 5));
+    }
+
+    @Test // ❌ FAIL
+    void testFail1() {
+        assertEquals(5, m.findMax(10, 5, 3)); // wrong
+    }
+
+    @Test // ❌ FAIL
+    void testFail2() {
+        assertEquals(2, m.findMax(2, 8, 5)); // wrong
+    }
+}
+
+#5bankacc
+public class BankAccount {
+
+    private double balance;
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0)
+            balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance)
+            balance -= amount;
+    }
+}
+#test
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BankAccountTest {
+
+    @Test // ✅ PASS
+    void testDeposit() {
+        BankAccount acc = new BankAccount(100);
+        acc.deposit(50);
+        assertEquals(150, acc.getBalance());
+    }
+
+    @Test // ✅ PASS
+    void testWithdraw() {
+        BankAccount acc = new BankAccount(100);
+        acc.withdraw(30);
+        assertEquals(70, acc.getBalance());
+    }
+
+    @Test // ❌ FAIL
+    void testWrongBalance() {
+        BankAccount acc = new BankAccount(100);
+        acc.deposit(50);
+        assertEquals(120, acc.getBalance()); // wrong
+    }
+
+    @Test // ❌ FAIL
+    void testOverWithdraw() {
+        BankAccount acc = new BankAccount(100);
+        acc.withdraw(200);
+        assertEquals(0, acc.getBalance()); // wrong
+    }
+}
